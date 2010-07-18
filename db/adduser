@@ -1,0 +1,8 @@
+#!/usr/bin/perl
+
+if ($#ARGV+1 eq 2) {
+	$cmd = 'sqlite3 '.$ARGV[0].' "insert into users (nick, isadmin) values (\''.$ARGV[1].'\', 1);"';
+	`$cmd`;
+} else {
+	print "./adduser <db file> <nick>\n";
+}

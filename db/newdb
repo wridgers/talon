@@ -1,0 +1,8 @@
+#!/usr/bin/perl
+
+if ($#ARGV+1 eq 1) {
+	$cmd = 'sqlite3 '.$ARGV[0].' ".read schema.sql"';
+	`$cmd`;
+} else {
+	print "./newdb <db file>\n";
+}
