@@ -1,0 +1,10 @@
+Thing that need doing to Talon
+
+[-] Proper command line options, override configuration
+[ ] Master password, MD5 encrypted, for recovery/killing/etc
+[ ] Per user password incase of different hostname, MD5 encrypted
+[ ] Customisable command trigger (currently !)
+[ ] Optional colours to messages
+[ ] Quote voting
+[ ] Logging -> hostmarks
+[ ] Users, email
