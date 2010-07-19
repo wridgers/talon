@@ -31,9 +31,14 @@ sub on_join {
 
 		#$irc->yield( privmsg => $channel => '>> '.$w3rds );				# Insult greets, comment out if you want.
 		$irc->yield( privmsg => $channel => '>> Welcome to '.$channel.', '.$nick.'!' );
+
+		my $title = $sql->selectrow_array("select title from users where `nick`='$nick';");
+		if ($title) {
+			$irc->yield( privmsg => $channel => '>> '.$title);
+		}
 	}
 
-	$irc->yield( mode => $channel => '+v' => $nick );					# Defunt in regard to automode?
+	#$irc->yield( mode => $channel => '+v' => $nick );					# Defunt in regard to automode?
 }
 
 sub about {
