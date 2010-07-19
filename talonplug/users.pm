@@ -49,9 +49,9 @@ sub on_public {
 				$irc->yield( privmsg => $respond => '>> User: '.@data[1]);
 			}
 
-			$irc->yield( privmsg => $respond => '>> Title: '.@data[3]);
-			$irc->yield( privmsg => $respond => '>> Host: '.@data[2]);
-			$irc->yield( privmsg => $respond => '>> Automode: '.@data[4]);
+			$irc->yield( privmsg => $respond => '>> Title: '.@data[3]) if @data[3] ne '';
+			$irc->yield( privmsg => $respond => '>> Host: '.@data[2]) if @data[2] ne '';
+			$irc->yield( privmsg => $respond => '>> Automode: '.@data[4]) if @data[4] ne '';
 		} else {
 			$irc->yield( privmsg => $respond => '>> No such user.');
 		}
@@ -60,7 +60,7 @@ sub on_public {
 	if ( $message =~ /^!title (.*)/ ) {
 		my $title = $1;
 		$title =~ s/'//g;
-		print "$title\n";
+		#print "$title\n";
 		
 		my @res = $sql->selectrow_array("select id from users where `nick`='$nick';");
 		if (@res) {
