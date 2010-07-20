@@ -40,7 +40,7 @@ sub on_public {
 	if ( $message =~ /^!user ([a-zA-Z0-9]*)/ ) {
 		my $nk = $1;
 		
-		my @data = $sql->selectrow_array("select id,nick,hostmask,title,automode from users where `nick`='$nk';");
+		my @data = $sql->selectrow_array("select id,nick,hostmask,is_admin,title,automode from users where `nick`='$nk';");
 
 		if (@data) {
 			if (@data[3] eq 1) {
@@ -49,9 +49,9 @@ sub on_public {
 				$irc->yield( privmsg => $respond => '>> User: '.@data[1]);
 			}
 
-			$irc->yield( privmsg => $respond => '>> Title: '.@data[3]) if @data[3] ne '';
+			$irc->yield( privmsg => $respond => '>> Title: '.@data[4]) if @data[4] ne '';
 			$irc->yield( privmsg => $respond => '>> Host: '.@data[2]) if @data[2] ne '';
-			$irc->yield( privmsg => $respond => '>> Automode: '.@data[4]) if @data[4] ne '';
+			$irc->yield( privmsg => $respond => '>> Automode: '.@data[5]) if @data[5] ne '';
 		} else {
 			$irc->yield( privmsg => $respond => '>> No such user.');
 		}

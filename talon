@@ -53,7 +53,7 @@ print "[kernel] Kernel initiated\n";
 ##################################################################
 
 sub load_all_modules {
-	my @s = split(/,/, $cfg->param('skip'));
+	my @s = split(/, /, $cfg->param('skip'));
 	print "[modules] Skip: ".$cfg->param('skip')."\n";
 
 	while ( <talonplug/*.pm> ) {
@@ -156,7 +156,6 @@ sub irc_public {
 	my $channel = $where->[0];
 
 	global_commands( $who[0], $who[1], $channel, $message );
-
 }
 
 sub irc_msg {
@@ -279,9 +278,9 @@ sub global_commands {
 				print "[modules] Reloaded\n";
 			}
 
-			if ( $message =~ /^!rehash/ ) {
+			if ( $message =~ /^!refresh/ ) {
 				Module::Refresh->refresh;
-				$poeirc->yield( privmsg => $channel => '>> Rehashed');
+				$poeirc->yield( privmsg => $channel => '>> Refreshed');
 				print "[modules] Rehashed\n";
 			}
 
@@ -308,11 +307,19 @@ sub global_commands {
 			}
 
 			if ( $message =~ /^!unload ([^ ]*)/ ) {
-				Module::Refresh->unload_module('talonplug::'.$1);
-				delete $modules{$1};
+				if (-e "talonplug/$1.pm") {
+					if (exists $modules{$1}) {
+						Module::Refresh->unload_module('talonplug::'.$1);
+						delete $modules{$1};
 
-				$poeirc->yield( privmsg => $channel => '>> Unloaded '.$1 );
-				print '[modules] Unloaded '.$1."\n";
+						$poeirc->yield( privmsg => $channel => '>> Unloaded '.$1 );
+						print '[modules] Unloaded '.$1."\n";
+					} else {	
+						$poeirc->yield( privmsg => $channel => '>> '.$1.' isn\'t loaded!' );
+					}
+				} else {
+					$poeirc->yield( privmsg => $channel => '>> '.$1.' doesn\'t exist!' );
+				}
 			}
 
 			if ( $message =~ /^!modules/ ) {
