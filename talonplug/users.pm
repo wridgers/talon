@@ -40,7 +40,7 @@ sub on_public {
 	if ( $message =~ /^!user ([a-zA-Z0-9]*)/ ) {
 		my $nk = $1;
 		
-		my @data = $sql->selectrow_array("select id,nick,hostmask,is_admin,title,automode from users where `nick`='$nk';");
+		my @data = $sql->selectrow_array("select id,nick,hostmask,isadmin,title,automode from users where `nick`='$nk';");
 
 		if (@data) {
 			if (@data[3] eq 1) {
