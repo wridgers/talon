@@ -1,5 +1,16 @@
+
+
 Thing that need doing to Talon
 
+Key:
+[ ] - To do
+[-] - Being done
+[x] - Done
+
+[ ] Statistics
+[ ] Threading
+[ ] Console control
+[ ] Webfront end
 [-] Proper command line options, override configuration
 [ ] Master password, MD5 encrypted, for recovery/killing/etc
 [ ] Per user password incase of different hostname, MD5 encrypted
@@ -7,4 +18,4 @@ Thing that need doing to Talon
 [ ] Optional colours to messages
 [ ] Quote voting
 [ ] Logging -> hostmarks
-[ ] Users, email
+[ ] Users, custom fields.
