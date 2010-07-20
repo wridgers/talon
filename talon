@@ -2,7 +2,7 @@
 
 use strict;
 
-# external modules
+# External modules
 use DBI;
 use POE;
 use POE::Component::IRC;
@@ -11,10 +11,18 @@ use Module::Refresh;
 use Config::Simple;
 use Getopt::Std;
 
+# Load talon common subs.
 use taloncommon;
 
+# Get command line options.
 my (%opts, $cfile);
 getopts('hc:', \%opts);
+
+# Create the hash array 'stack'.
+my %talon;
+
+# Set command trigger.
+%talon{'trigger'} = "!";
 
 usage() if $opts{'h'};
 
@@ -24,15 +32,20 @@ $cfile = $opts{'c'} if ($opts{'c'});
 my $cfg = new Config::Simple('conf/'.$cfile);
 print "[config] Loaded conf/$cfile.\n";
 
-# MODULES
+# Modules hash array.
 my %modules = ( );
+
+# Load all modules in talonplug, ignore skipped in config.
 load_all_modules();
 
+# Setup SQLite database.
 my $dbh = DBI->connect("dbi:SQLite:dbname=".$cfg->param('db'),"","",{AutoCommit => 1, PrintError => 1});
 
+# Initiate connection to IRC server.
 print "[kernel] Creating connection to IRC server...\n";
 print '[kernel] '.$cfg->param('server').':'.$cfg->param('port').' as '.$cfg->param('nick')."\n";
 
+# Spawn.
 my $poeirc = POE::Component::IRC->spawn( 	Nick => $cfg->param('nick'),
 						Server => $cfg->param('server'),
 						Port => $cfg->param('port'),
@@ -53,7 +66,7 @@ print "[kernel] Kernel initiated\n";
 ##################################################################
 
 sub load_all_modules {
-	my @s = split(/, /, $cfg->param('skip'));
+	my @s = split(/,/, $cfg->param('skip'));
 	print "[modules] Skip: ".$cfg->param('skip')."\n";
 
 	while ( <talonplug/*.pm> ) {
