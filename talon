@@ -19,10 +19,10 @@ my (%opts, $cfile);
 getopts('hc:', \%opts);
 
 # Create the hash array 'stack'.
-my %talon;
+# my %stack;
 
 # Set command trigger.
-%talon{'trigger'} = "!";
+# %stack{'trigger'} = "!";
 
 usage() if $opts{'h'};
 
