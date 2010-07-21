@@ -21,6 +21,7 @@ sub on_public {
 			$mech->get($url);
 			my $html = $mech->content;
 
+			$html =~ s/\n//gi;
 			$html =~ /<title([^>]*)>(.*?)<\/title>/i;
 			my $title = $2;
 
