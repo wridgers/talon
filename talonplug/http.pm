@@ -22,6 +22,7 @@ sub on_public {
 			my $html = $mech->content;
 
 			$html =~ s/\n//gi;
+			$html =~ s/\t//gi;
 			$html =~ /<title([^>]*)>(.*?)<\/title>/i;
 			my $title = $2;
 
