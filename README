@@ -1,12 +1,21 @@
+talon - an open source IRC bot written in Perl.
+http://github.com/mindfuzz/talon
 
+###### Getting Started ######
+1. Make sure you have all the required Perl modules installed.
+2. Create a database,
+	cd ./talon/db
+	./newdb databasename.db
+3. Add a user to the database
+	./adduser dabasename.db yournick
+4. Setup the config, a default configuration is provided.
+	cd ../conf/
+	vim default.conf
+5. Run talon!
+	cd ../
+	./talon
 
-Thing that need doing to Talon
-
-Key:
-[ ] - To do
-[-] - Being done
-[x] - Done
-
+###### To Do ######
 [ ] Statistics
 [ ] Threading
 [ ] Console control
