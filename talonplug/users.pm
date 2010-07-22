@@ -8,27 +8,40 @@ package talonplug::users;
 
 ## onload
 sub new {
+	my ($dbh) = @_;
 	eval {
 		## test if database contains users table, 
 		## if true, move on silently
+		if ($dbh->do('select * from users where 1=2')) {
+			#all is well
+		} else {
 		## if false, print warning and generate table from schema
-		#create table users (
-		#	id		integer primary key,
-		#	nick		text,
-		#	password	text,
-		#	hostmask	text,
-		#	title		text,
-		#	email		text,
-		#	automode	text,
-		#	isbanned	integer default 0,
-		#	isadmin		integer default 0,
-		#	isgod		integer default 0
-		#);
+			gen_schema($dbh);
+		}
+	}
+	if ($@) { #oops I crapped my pants! try the schema again!
+		gen_schema($dbh);
 	}
 	my $self = { };
 	return bless $self;
 }
-
+sub gen_schema {
+	my ($dbh) = @_;
+	print "[users] Warning: creating table users\n";
+	$schema = "(
+			id		integer primary key,
+			nick		text,
+			password	text,
+			hostmask	text,
+			title		text,
+			email		text,
+			automode	text,
+			isbanned	integer default 0,
+			isadmin		integer default 0,
+			isgod		integer default 0
+		)";
+	$dbh->do("create table users $schema");
+}
 sub on_public {
 	my ($self, $irc, $sql, $message, $nick, $respond, $host ) = @_;
 

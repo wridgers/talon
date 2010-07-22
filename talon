@@ -42,7 +42,8 @@ my $dbh = DBI->connect("dbi:SQLite:dbname=".$cfg->param('db'),"","",{AutoCommit 
 my %modules = ( );
 
 # Load all modules in talonplug, ignore skipped in config.
-load_all_modules();
+## pass the dbh to load for modules that require sql
+load_all_modules($dbh);
 
 # Initiate connection to IRC server.
 print "[kernel] Creating connection to IRC server...\n";
@@ -69,6 +70,7 @@ print "[kernel] Kernel initiated\n";
 ##################################################################
 
 sub load_all_modules {
+	my ($dbh) = @_;
 	my @s = split(/,/, $cfg->param('skip'));
 	print "[modules] Skip: ".$cfg->param('skip')."\n";
 
@@ -79,7 +81,7 @@ sub load_all_modules {
 		if (not grep {$_ eq $m} @s) {
 			if ( check_module($m) eq 1 ) {
 				load 'talonplug::'.$m;
-				$modules{$m} = "talonplug::$m"->new();
+				$modules{$m} = "talonplug::$m"->new($dbh); ##pass dbh in case of sql
 				print "[modules] Loaded $m\n";
 			} else {
 				print "[modules] $m contains errors.\n";
