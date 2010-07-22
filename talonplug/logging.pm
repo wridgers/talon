@@ -18,7 +18,7 @@ sub new {
 		#	chan		text,
 		#	message		text
 		#);
-	}
+	};
 	my $self = { };
 	return bless $self;
 }

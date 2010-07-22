@@ -18,7 +18,7 @@ sub new {
 		## if false, print warning and generate table from schema
 			gen_schema($dbh);
 		}
-	}
+	};
 	if ($@) { #oops I crapped my pants! try the schema again!
 		gen_schema($dbh);
 	}

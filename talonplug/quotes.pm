@@ -18,7 +18,7 @@ sub new {
 		#	addby		text,
 		#	addhost		text
 		#);
-	}
+	};
 	my $self = { };
 	return bless $self;
 }
