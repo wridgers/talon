@@ -35,15 +35,14 @@ print "[config] Loaded conf/$cfile.\n";
 ## Before we go any farther, lets see if the database exists
 unless (-e $cfg->param('db')) { print "Unable to start. Database missing. Maybe you should check the README.\n"; exit; }
 
+# Setup SQLite database.
+my $dbh = DBI->connect("dbi:SQLite:dbname=".$cfg->param('db'),"","",{AutoCommit => 1, PrintError => 1});
 
 # Modules hash array.
 my %modules = ( );
 
 # Load all modules in talonplug, ignore skipped in config.
 load_all_modules();
-
-# Setup SQLite database.
-my $dbh = DBI->connect("dbi:SQLite:dbname=".$cfg->param('db'),"","",{AutoCommit => 1, PrintError => 1});
 
 # Initiate connection to IRC server.
 print "[kernel] Creating connection to IRC server...\n";

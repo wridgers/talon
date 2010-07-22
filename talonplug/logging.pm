@@ -6,6 +6,19 @@ use strict;
 package talonplug::logging;
 
 sub new {
+	eval {
+		## test if database contains logs table, 
+		## if true, move on silently
+		## if false, print warning and generate table from schema
+		#create table logs (
+		#	id		integer primary key,
+		#	timestamp	text,
+		#	nick		text,
+		#	host		text,
+		#	chan		text,
+		#	message		text
+		#);
+	}
 	my $self = { };
 	return bless $self;
 }

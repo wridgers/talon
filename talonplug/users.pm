@@ -6,7 +6,25 @@ use strict;
 use taloncommon;
 package talonplug::users;
 
+## onload
 sub new {
+	eval {
+		## test if database contains users table, 
+		## if true, move on silently
+		## if false, print warning and generate table from schema
+		#create table users (
+		#	id		integer primary key,
+		#	nick		text,
+		#	password	text,
+		#	hostmask	text,
+		#	title		text,
+		#	email		text,
+		#	automode	text,
+		#	isbanned	integer default 0,
+		#	isadmin		integer default 0,
+		#	isgod		integer default 0
+		#);
+	}
 	my $self = { };
 	return bless $self;
 }

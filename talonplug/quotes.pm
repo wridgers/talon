@@ -6,6 +6,19 @@ use strict;
 package talonplug::quotes;
 
 sub new {
+	eval {
+		## test if database contains quotes table, 
+		## if true, move on silently
+		## if false, print warning and generate table from schema
+		#create table quotes (
+		#	id		integer primary key,
+		#	nick		text,
+		#	quote		text,
+		#	vote		integer,
+		#	addby		text,
+		#	addhost		text
+		#);
+	}
 	my $self = { };
 	return bless $self;
 }
