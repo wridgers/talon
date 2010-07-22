@@ -28,7 +28,7 @@ sub new {
 sub gen_schema {
 	my ($dbh) = @_;
 	print "[users] Warning: creating table users\n";
-	$schema = "(
+	my $schema = "(
 			id		integer primary key,
 			nick		text,
 			password	text,
